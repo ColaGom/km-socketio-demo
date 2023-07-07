@@ -1,4 +1,5 @@
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
@@ -10,7 +11,13 @@ fun main() =
         title = "Socket.io",
         state = WindowState(size = DpSize(360.dp, 640.dp))
     ) {
-        val socket = MySocket()
+        var signal by remember { mutableStateOf("") }
+
+        val socket = MySocket {
+            signal = it
+        }
+
+        Text(signal)
 
         DisposableEffect(Unit) {
             onDispose {
